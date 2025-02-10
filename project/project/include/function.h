@@ -1,0 +1,16 @@
+void mainmenu();
+void menu1();
+void menu2();
+void menu3();
+void addStu();
+void showList();
+void findStu();
+void delStu();
+void editStu();
+void sortStu();
+void addtea();
+void deltea();
+void edittea();
+void addcla();
+void delcla();
+void editcla();
