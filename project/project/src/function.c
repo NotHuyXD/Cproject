@@ -87,15 +87,16 @@ void addStu()
         {
             check = 0;
             printf("Nhập tên sinh viên: ");
-            fgets(s[i].name, 50, stdin);
+            fgets(s[i].name, 35, stdin);
+            s[i].name[strlen(s[i].name) - 1] = '\0';
             fflush(stdin);
             if (strlen(s[i].name) == 0)
             {
                 printf("Tên không được để trống\n");
             }
-            if (strlen(s[i].name) > 50)
+            if (strlen(s[i].name) > 35)
             {
-                printf("Tên không được quá 50 ký tự\n");
+                printf("Tên không được quá 35 ký tự\n");
             }
             for (int j = 0; j < strlen(s[i].name); j++)
             {
@@ -106,7 +107,7 @@ void addStu()
                     break;
                 }
             }
-        } while (strlen(s[i].name) > 50 || strlen(s[i].name) == 0 || check == 1);
+        } while (strlen(s[i].name) > 35 || strlen(s[i].name) == 0 || check == 1);
         do
         {
             check = 0;
@@ -239,13 +240,7 @@ void addStu()
             loop = 0;
             check = 0;
             printf("Nhập gmail sinh viên: ");
-            fgets(s[i].gmail, 50, stdin);
-            fflush(stdin);
-            if (strchr(s[i].gmail, '@') == NULL || strchr(s[i].gmail, '.') == NULL)
-            {
-                printf("Gmail không hợp lệ\n");
-                check = 1;
-            }
+            gets(s[i].gmail);
             if (strlen(s[i].gmail) == 0)
             {
                 printf("Gmail không được để trống\n");
@@ -260,6 +255,11 @@ void addStu()
                     break;
                 }
             }
+            if (strchr(s[i].gmail, '@') == NULL || strchr(s[i].gmail, '.') == NULL)
+            {
+                printf("Gmail không hợp lệ\n");
+                check = 1;
+            }
         } while (loop == 1 || check == 1);
         printf("Thêm sinh viên thành công\n");
     }
@@ -271,13 +271,13 @@ void showList()
 {
     FILE *f = fopen("Student.txt", "rb");
     fread(&s, sizeof(Student), totalStudent, f);
-    printf("===================================================================================================\n");
-    printf("||%-12s|%-22s|%-15s|%-5s|%-10s|%-26s||\n", "ID", "Tên", "Ngày sinh", "Tuổi", "Số điện thoại", "Gmail");
+    printf("=========================================================================================================\n");
+    printf("||%-12s|%-22s|%-15s|%-5s|%-10s|%-32s||\n", "ID", "Tên", "Ngày sinh", "Tuổi", "Số điện thoại", "Gmail");
     for (int i = 0; i < totalStudent; i++)
     {
-        printf("||%-13s|%-21s|%-3d/%-3d/%-6d|%-4d|%-13s|%-26s||\n", s[i].id, s[i].name, s[i].birthdate.day, s[i].birthdate.month, s[i].birthdate.year, s[i].age, s[i].phone, s[i].gmail);
+        printf("||%-13s|%-21s|%-3d/%-3d/%-6d|%-4d|%-13s|%-32s||\n", s[i].id, s[i].name, s[i].birthdate.day, s[i].birthdate.month, s[i].birthdate.year, s[i].age, s[i].phone, s[i].gmail);
     }
-    printf("===================================================================================================\n");
+    printf("=========================================================================================================\n");
     fclose(f);
 }
 void findStu()
@@ -289,10 +289,10 @@ void findStu()
     {
         if (strcmp(find, s[i].name) == 0)
         {
-            printf("===================================================================================================\n");
-            printf("||%-15s|%-25s|%-5s|%-10s|%-35s||\n", "ID", "Tên", "Tuổi", "Số điện thoại", "Gmail");
-            printf("||%-15d|%-24s|%-4d|%-13s|%-35s||\n", s[i].id, s[i].name, s[i].age, s[i].phone, s[i].gmail);
-            printf("===================================================================================================\n");
+            printf("=========================================================================================================\n");
+            printf("||%-12s|%-22s|%-15s|%-5s|%-10s|%-32s||\n", "ID", "Tên", "Ngày sinh", "Tuổi", "Số điện thoại", "Gmail");
+            printf("||%-13s|%-21s|%-3d/%-3d/%-6d|%-4d|%-13s|%-32s||\n", s[i].id, s[i].name, s[i].birthdate.day, s[i].birthdate.month, s[i].birthdate.year, s[i].age, s[i].phone, s[i].gmail);
+            printf("=========================================================================================================\n");
             break;
         }
         else if (strcmp(find, s[i].name) != 0)
@@ -354,7 +354,8 @@ void editStu()
             check = 1;
             printf("Nhập thông tin mới cho sinh viên\n");
             printf("Nhập tên: ");
-            gets(s[i].name);
+            fgets(s[i].name, 35, stdin);
+            s[i].name[strlen(s[i].name) - 1] = '\0';
             printf("Nhập tuổi: ");
             scanf("%d", &s[i].age);
             printf("Nhập số điện thoại: ");
@@ -388,12 +389,12 @@ void sortStu()
             }
         }
     }
-    printf("===================================================================================================\n");
-    printf("||%-15s|%-25s|%-5s|%-10s|%-35s||\n", "ID", "Tên", "Tuổi", "Số điện thoại", "Gmail");
+    printf("=========================================================================================================\n");
+    printf("||%-12s|%-22s|%-15s|%-5s|%-10s|%-32s||\n", "ID", "Tên", "Ngày sinh", "Tuổi", "Số điện thoại", "Gmail");
     for (int i = 0; i < totalStudent; i++)
     {
-        printf("||%-15s|%-24s|%-4d|%-13s|%-35s||\n", s[i].id, s[i].name, s[i].age, s[i].phone, s[i].gmail);
+        printf("||%-13s|%-21s|%-3d/%-3d/%-6d|%-4d|%-13s|%-32s||\n", s[i].id, s[i].name, s[i].birthdate.day, s[i].birthdate.month, s[i].birthdate.year, s[i].age, s[i].phone, s[i].gmail);
     }
-    printf("===================================================================================================\n");
+    printf("=========================================================================================================\n");
     fclose(f);
 }
