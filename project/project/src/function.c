@@ -272,10 +272,10 @@ void showList()
     FILE *f = fopen("Student.txt", "rb");
     fread(&s, sizeof(Student), totalStudent, f);
     printf("=========================================================================================================\n");
-    printf("||%-12s|%-22s|%-15s|%-5s|%-10s|%-32s||\n", "ID", "Tên", "Ngày sinh", "Tuổi", "Số điện thoại", "Gmail");
+    printf("||%-12s|%-21s|%-15s|%-5s|%-10s|%-30s||\n", "ID", "Tên", "Ngày sinh", "Tuổi", "Số điện thoại", "Gmail");
     for (int i = 0; i < totalStudent; i++)
     {
-        printf("||%-13s|%-21s|%-3d/%-3d/%-6d|%-4d|%-13s|%-32s||\n", s[i].id, s[i].name, s[i].birthdate.day, s[i].birthdate.month, s[i].birthdate.year, s[i].age, s[i].phone, s[i].gmail);
+        printf("||%-13s|%-20s|%-3d/%-3d/%-6d|%-4d|%-13s|%-30s||\n", s[i].id, s[i].name, s[i].birthdate.day, s[i].birthdate.month, s[i].birthdate.year, s[i].age, s[i].phone, s[i].gmail);
     }
     printf("=========================================================================================================\n");
     fclose(f);
