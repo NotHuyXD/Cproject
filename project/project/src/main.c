@@ -25,12 +25,24 @@ int main(int argc, char const *argv[])
                 case 2:
                     showList();
                     break;
+                case 3:
+                    searchStu();
+                    break;
+                case 4:
+                    delStu();
+                    break;
+                case 5:
+                    editStu();
+                    break;
+                case 6:
+                    sortStu();
+                    break;
                 case 7:
                     break;
                 default:
                     printf("Lựa chọn không hợp lệ\n");
                 }
-            } while (menuchoice != 6);
+            } while (menuchoice != 7);
             break;
         case 2:
             do
@@ -40,13 +52,30 @@ int main(int argc, char const *argv[])
                 scanf("%d", &menuchoice);
                 switch (menuchoice)
                 {
+                case 1:
+                    addTea();
+                    break;
+                case 2:
+                    listTea();
+                    break;
+                case 3:
+                    delTea();
+                    break;
                 case 4:
+                    editTea();
+                    break;
+                case 5:
+                    searchTea();
+                    break;
+                case 6:
+                    break;
+                case 7:
                     break;
                 default:
                     printf("Lựa chọn không hợp lệ\n");
                     break;
                 }
-            } while (menuchoice != 4);
+            } while (menuchoice != 7);
             break;
         case 3:
             do
@@ -56,13 +85,13 @@ int main(int argc, char const *argv[])
                 scanf("%d", &menuchoice);
                 switch (menuchoice)
                 {
-                case 4:
+                case 6:
                     break;
                 default:
                     printf("Lựa chọn không hợp lệ\n");
                     break;
                 }
-            } while (menuchoice != 4);
+            } while (menuchoice != 6);
             break;
         case 4:
             break;
