@@ -20,23 +20,39 @@ int main(int argc, char const *argv[])
                 switch (menuchoice)
                 {
                 case 1:
-                    addStu();
+                    addStudent();
                     break;
                 case 2:
                     showList();
                     break;
                 case 3:
-                    searchStu();
+                    searchStudent();
                     break;
                 case 4:
-                    delStu();
+                    delStudent();
                     break;
                 case 5:
-                    editStu();
+                    editStudent();
                     break;
                 case 6:
-                    sortStu();
-                    break;
+                    menuSort();
+                    printf("Lựa chọn sắp xếp của bạn: ");
+                    getchar();
+                    scanf("%c", &sort);
+                    switch (sort)
+                    {
+                    case 'a':
+                        sortStudent1();
+                        break;
+                    case 'b':
+                        sortStudent2();
+                        break;
+                    case 'c':
+                        break;
+                    default:
+                        printf("Lựa chọn không hợp lệ\n");
+                        break;
+                    }
                 case 7:
                     break;
                 default:
@@ -53,19 +69,19 @@ int main(int argc, char const *argv[])
                 switch (menuchoice)
                 {
                 case 1:
-                    addTea();
+                    addTeacher();
                     break;
                 case 2:
-                    listTea();
+                    listTeacher();
                     break;
                 case 3:
-                    delTea();
+                    delTeacher();
                     break;
                 case 4:
-                    editTea();
+                    editTeacher();
                     break;
                 case 5:
-                    searchTea();
+                    searchTeacher();
                     break;
                 case 6:
                     break;
@@ -85,6 +101,15 @@ int main(int argc, char const *argv[])
                 scanf("%d", &menuchoice);
                 switch (menuchoice)
                 {
+                case 1:
+                    addClass();
+                    break;
+                case 2:
+                    listClass();
+                    break;
+                case 5:
+                    showClass();
+                    break;
                 case 6:
                     break;
                 default:
