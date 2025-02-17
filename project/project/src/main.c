@@ -3,6 +3,8 @@
 #include "function.c"
 int main(int argc, char const *argv[])
 {
+    accountInformation();
+    loginAccount();
     do
     {
         int menuchoice = 0;
@@ -84,6 +86,7 @@ int main(int argc, char const *argv[])
                     searchTeacher();
                     break;
                 case 6:
+                    addClassTeacher();
                     break;
                 case 7:
                     break;
@@ -107,10 +110,14 @@ int main(int argc, char const *argv[])
                 case 2:
                     listClass();
                     break;
+                case 3:
+                    delClass();
+                    break;
                 case 5:
                     showClass();
                     break;
                 case 6:
+                    editClass();
                     break;
                 default:
                     printf("Lựa chọn không hợp lệ\n");

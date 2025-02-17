@@ -28,6 +28,11 @@ typedef struct teacher
     Classroom classroom[];
 
 } Teacher;
+typedef struct Account
+{
+    char username[50], password[25];
+} Account;
+Account account;
 Student s[100];
 Classroom c[10];
 Teacher t[100];
@@ -36,3 +41,4 @@ char find[20], del[10], add[10];
 int classList = 0;
 int n, option, numToAdd;
 char sort;
+char username[50], password[25];

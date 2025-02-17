@@ -10,10 +10,14 @@ void mainmenu() // Menu chính
 }
 void menu1() // Menu quản lý sinh viên
 {
-    FILE *f = fopen("D:/project/project/data/Student.bin", "rb");
-    fread(&totalStudent, sizeof(int), 1, f);
-    fread(s, sizeof(Student), totalStudent, f);
-    fclose(f);
+    FILE *f1 = fopen("D:/project/project/data/Student.bin", "rb");
+    FILE *f2 = fopen("D:/project/project/data/Classroom.bin", "wb+");
+    fread(&totalStudent, sizeof(int), 1, f1);
+    fread(s, sizeof(Student), totalStudent, f1);
+    fread(&totalClass, sizeof(int), 1, f2);
+    fread(c, sizeof(Classroom), totalClass, f2);
+    fclose(f1);
+    fclose(f2);
     printf("==============STUDENT MANAGEMENT==============\n");
     printf("||1. Thêm sinh viên%26.5c||\n");
     printf("||2. Hiển thị danh sách sinh viên%12.5c||\n");
@@ -415,6 +419,23 @@ void delStudent() // Xóa sinh viên
                     switch (option)
                     {
                     case 1:
+                        FILE *fpt = fopen("D:/project/project/data/Classroom.bin", "wb+");
+                        fread(&totalClass, sizeof(int), 1, fpt);
+                        fread(c, sizeof(Classroom), totalClass, fpt);
+                        for (int k = 0; k < totalClass; k++)
+                        {
+                            if (strcmp(s[i].classId, c[k].id) == 0)
+                            {
+                                for (int m = k; m < c[k].totalStudent - 1; m++)
+                                {
+                                    c[k].students[m] = c[k].students[m + 1];
+                                }
+                                c[k].totalStudent--;
+                            }
+                        }
+                        fwrite(&totalClass, sizeof(int), 1, fpt);
+                        fread(c, sizeof(Classroom), totalClass, fpt);
+                        fclose(fpt);
                         for (int j = i; j < totalStudent - 1; j++)
                         {
                             s[j] = s[j + 1];
@@ -1042,6 +1063,13 @@ void delTeacher() // Xóa giáo viên
                     switch (option)
                     {
                     case 1:
+                        for (int k = 0; k < totalStudent; k++)
+                        {
+                            if (strcmp(t[i].name, c[k].teacherName) == 0)
+                            {
+                                strcpy(c[k].teacherName, '\0');
+                            }
+                        }
                         for (int j = i; j < totalTeacher - 1; j++)
                         {
                             t[j] = t[j + 1];
@@ -1282,7 +1310,7 @@ void editTeacher() // Sửa thông tin giáo viên
         }
     }
 }
-void searchTeacher()
+void searchTeacher() // Tìm kiếm giáo viên
 {
     FILE *f = fopen("D:/project/project/data/Teacher.bin", "rb");
     if (f == NULL)
@@ -1323,7 +1351,7 @@ void searchTeacher()
         }
     }
 }
-void addClassTeacher()
+void addClassTeacher() // Thêm lớp học cho giáo viên
 {
     FILE *f = fopen("D:/project/project/data/Teacher.bin", "wb+");
     if (f == NULL)
@@ -1404,7 +1432,7 @@ void addClassTeacher()
         }
     }
 }
-void addClass()
+void addClass() // Thêm lớp học
 {
     FILE *f = fopen("D:/project/project/data/Classroom.bin", "wb+");
     fread(&totalClass, sizeof(int), 1, f);
@@ -1429,12 +1457,12 @@ void addClass()
                 printf("ID không được để trống\n");
                 check = 1;
             }
-            if (c[i].id[0] != 'I' || c[i].id[1] != 'N' || c[i].id[2] != 'T')
+            if (c[i].id[0] != 'I' || c[i].id[1] != 'N' || c[i].id[2] != 'T') // Kiểm tra 3 ký tự đầu có phải INT không
             {
                 printf("ID không hợp lệ");
                 check = 1;
             }
-            for (int j = 0; j < i; j++)
+            for (int j = 0; j < i; j++) // Kiểm tra nếu ID bị trùng lặp
             {
                 if (strcmp(c[i].id, c[j].id) == 0)
                 {
@@ -1454,7 +1482,7 @@ void addClass()
                 check = 1;
                 printf("Tên lớp không được quá 20 ký tự\n");
             }
-            for (int j = 0; j < i; j++)
+            for (int j = 0; j < i; j++) // Kiểm tra nếu tên lớp trùng lặp
             {
                 if (strcmp(c[i].name, c[j].name) == 0)
                 {
@@ -1469,7 +1497,7 @@ void addClass()
     fwrite(c, sizeof(Classroom), totalClass, f);
     fclose(f);
 }
-void listClass()
+void listClass() // Hiển thị tất cả lớp học
 {
     FILE *f = fopen("D:/project/project/data/Classroom.bin", "rb");
     if (f == NULL)
@@ -1479,7 +1507,7 @@ void listClass()
     else
     {
         fread(&totalClass, sizeof(int), 1, f);
-        fread(c, sizeof(Classroom), totalClass, f);
+        fread(c, sizeof(Classroom), totalClass, f); // Lấy dữ liệu lớp từ File
         if (totalClass == 0)
         {
             printf("Danh sách rỗng\n");
@@ -1487,18 +1515,18 @@ void listClass()
         else
         {
             printf("%43cDANH SACH LOP\n");
-            printf("===============================================================================================================\n");
+            printf("================================================================\n");
             printf("||%-10s|%-23s|%-6s|%-24s||\n", "ID", "Tên lớp", "Sĩ số", "Giáo viên");
             for (int i = 0; i < totalClass; i++)
             {
                 printf("||%-10s|%-20s|%-5d|%-22s||\n", c[i].id, c[i].name, c[i].totalStudent, c[i].teacherName);
             }
-            printf("===============================================================================================================\n");
+            printf("================================================================\n");
             fclose(f);
         }
     }
 }
-void showClass()
+void showClass() // Hiển thị lớp học
 {
     FILE *f = fopen("D:/project/project/data/Classroom.bin", "wb+");
     if (f == NULL)
@@ -1523,10 +1551,10 @@ void showClass()
                 if (strcmp(find, c[i].id) == 0)
                 {
                     n = 1;
-                    printf("===============================================================================================================\n");
+                    printf("===================================================================================================\n");
                     printf("||%-10s|%-20s|%-6s|%-20s||\n", "ID", "Tên lớp", "Sĩ số", "Giáo viên");
                     printf("||%-10s|%-20s|%-6d|%-20s||\n", c[i].id, c[i].name, c[i].totalStudent, c[i].teacherName);
-                    printf("===============================================================================================================\n");
+                    printf("===================================================================================================\n");
                     printf("Bạn có muốn thêm sinh viên cho lớp không?\n");
                     printf("1. Có%5c2. Không\n");
                     printf("Lựa chọn của bạn: ");
@@ -1595,7 +1623,7 @@ void showClass()
     }
     fclose(f);
 }
-void delClass()
+void delClass() // Xóa lớp học
 {
     FILE *f = fopen("D:/project/project/data/Classroom.bin", "wb+");
     if (f == NULL)
@@ -1627,6 +1655,9 @@ void delClass()
                     switch (option)
                     {
                     case 1:
+                        FILE *fpt = fopen("D:/project/project/data/Student.bin", "wb+");
+                        fread(&totalStudent, sizeof(int), 1, fpt);
+                        fread(s, sizeof(Student), totalStudent, fpt);
                         for (int k = 0; k < totalStudent; k++)
                         {
                             if (strcmp(s[k].classId, c[i].id) == 0)
@@ -1634,6 +1665,9 @@ void delClass()
                                 strcpy(s[k].classId, '\0');
                             }
                         }
+                        fwrite(&totalStudent, sizeof(int), 1, fpt);
+                        fread(s, sizeof(Student), totalStudent, fpt);
+                        fclose(fpt);
                         for (int j = i; j < totalClass - 1; j++)
                         {
                             c[j] = c[j + 1];
@@ -1658,4 +1692,137 @@ void delClass()
             fclose(f);
         }
     }
+}
+void editClass() // Chỉnh sửa thông tin lớp học
+{
+    FILE *f = fopen("D:/project/project/data/Classroom.bin", "wb+");
+    if (f == NULL)
+    {
+        printf("Lỗi mở file\n");
+    }
+    else
+    {
+        fread(&totalClass, sizeof(int), 1, f);
+        fread(c, sizeof(Classroom), totalClass, f);
+        if (totalClass == 0)
+        {
+            printf("Danh sách rỗng\n");
+        }
+        else
+        {
+            n = 0;
+            printf("Nhập ID lớp muốn sửa: ");
+            scanf("%s", &del);
+            for (int i = 0; i < totalClass; i++)
+            {
+                if (strcmp(c[i].id, del) == 0)
+                {
+                    n = 1;
+                    printf("Nhập thông tin mới cho lớp học\n");
+                    do
+                    {
+                        check = 0;
+                        getchar();
+                        printf("Nhập tên lớp: ");
+                        fgets(c[i].name, 20, stdin);
+                        c[i].name[strlen(c[i].name) - 1] = '\0';
+                        fflush(stdin);
+                        if (strlen(c[i].name) == 0)
+                        {
+                            printf("Tên không được để trống\n");
+                        }
+                        if (strlen(c[i].name) > 20)
+                        {
+                            printf("Tên không được quá 20 ký tự\n");
+                        }
+                        for (int j = 0; j < strlen(c[i].name); j++)
+                        {
+                            if (c[i].name[j] >= '0' && c[i].name[j] <= '9')
+                            {
+                                printf("Tên không được chứa số\n");
+                                check = 1;
+                                break;
+                            }
+                        }
+                    } while (strlen(c[i].name) > 20 || strlen(s[i].name) == 0 || check == 1);
+                    fwrite(&totalClass, sizeof(int), 1, f);
+                    fwrite(c, sizeof(Classroom), totalClass, f);
+                    fclose(f);
+                    printf("Sửa lớp thành công\n");
+                    break;
+                }
+            }
+            if (n == 0)
+            {
+                printf("Khong tim thay lớp học\n");
+            }
+        }
+    }
+}
+void accountInformation() // Lưu thông tin đăng nhập đã có vào file
+{
+    strcpy(account.username, "duonggiahuy123");
+    strcpy(account.password, "29112006");
+    FILE *f = fopen("D:/project/project/data/Account.bin", "wb");
+    fwrite(&account, sizeof(Account), 1, f);
+    fclose(f);
+}
+void loginAccount() // Đăng nhập tài khoản
+{
+    FILE *f = fopen("D:/project/project/data/Account.bin", "rb");
+    fread(&account, sizeof(Account), 1, f);
+    do
+    {
+        check = 0;
+        printf("%25cĐĂNG NHẬP TÀI KHOẢN QUẢN LÝ\n");
+        printf("Username:");
+        scanf("%s", &username);
+        printf("Password:");
+        int i = 0;
+        char ch;
+        while (1)
+        {
+            ch = getch();
+            if (ch == 13) // Enter key
+            {
+                password[i] = '\0';
+                break;
+            }
+            else if (ch == 8) // Backspace key
+            {
+                if (i > 0)
+                {
+                    i--;
+                    printf("\b \b");
+                }
+            }
+            else
+            {
+                password[i] = ch;
+                i++;
+                printf("*");
+            }
+        }
+        printf("\n");
+        if (strcmp(account.password, password) != 0 || strcmp(account.username, username) != 0)
+        {
+            check = 1;
+            printf("Thông tin đăng nhập không hợp lệ\n");
+        }
+        if (strlen(password) > 25)
+        {
+            check = 1;
+            printf("Mật khẩu không được vượt quá 25 ký tự\n");
+        }
+        if (strlen(username) > 50)
+        {
+            check = 1;
+            printf("Tên đăng nhập không được vượt quá 50 ký tự\n");
+        }
+    } while (check == 1);
+    if (strcmp(account.password, password) == 0 && strcmp(account.username, username) == 0)
+    {
+        printf("Đăng nhập thành công\n");
+    }
+    fclose(f);
 }
