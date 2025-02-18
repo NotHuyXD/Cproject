@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include "function.c"
 int main(int argc, char const *argv[])
 {
@@ -116,8 +115,10 @@ int main(int argc, char const *argv[])
                 case 5:
                     showClass();
                     break;
-                case 6:
+                case 4:
                     editClass();
+                    break;
+                case 6:
                     break;
                 default:
                     printf("Lựa chọn không hợp lệ\n");

@@ -21,3 +21,5 @@ void delClass();
 void editClass();
 void listClass();
 void showClass();
+void accountInformation();
+void loginAccount();

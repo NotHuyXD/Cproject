@@ -2,6 +2,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <conio.h>
 typedef struct BirthDate
 {
     int day, month, year;

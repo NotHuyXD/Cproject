@@ -11,7 +11,7 @@ void mainmenu() // Menu chính
 void menu1() // Menu quản lý sinh viên
 {
     FILE *f1 = fopen("D:/project/project/data/Student.bin", "rb");
-    FILE *f2 = fopen("D:/project/project/data/Classroom.bin", "wb+");
+    FILE *f2 = fopen("D:/project/project/data/Classroom.bin", "rb");
     fread(&totalStudent, sizeof(int), 1, f1);
     fread(s, sizeof(Student), totalStudent, f1);
     fread(&totalClass, sizeof(int), 1, f2);
@@ -1552,8 +1552,8 @@ void showClass() // Hiển thị lớp học
                 {
                     n = 1;
                     printf("===================================================================================================\n");
-                    printf("||%-10s|%-20s|%-6s|%-20s||\n", "ID", "Tên lớp", "Sĩ số", "Giáo viên");
-                    printf("||%-10s|%-20s|%-6d|%-20s||\n", c[i].id, c[i].name, c[i].totalStudent, c[i].teacherName);
+                    printf("||%-10s|%-23s|%-6s|%-24s||\n", "ID", "Tên lớp", "Sĩ số", "Giáo viên");
+                    printf("||%-10s|%-20s|%-5d|%-22s||\n", c[i].id, c[i].name, c[i].totalStudent, c[i].teacherName);
                     printf("===================================================================================================\n");
                     printf("Bạn có muốn thêm sinh viên cho lớp không?\n");
                     printf("1. Có%5c2. Không\n");
@@ -1587,7 +1587,7 @@ void showClass() // Hiển thị lớp học
                                     scanf("%s", &add);
                                     for (int j = 0; j < totalStudent; j++)
                                     {
-                                        if (strcmp(add, s[j].id) == 0 && strlen(s[i].classId) == 0)
+                                        if (strcmp(add, s[j].id) == 0 && strlen(s[j].classId) == 0)
                                         {
                                             exist = 1;
                                             strcpy(s[j].classId, c[i].id);
@@ -1595,7 +1595,7 @@ void showClass() // Hiển thị lớp học
                                             c[i].totalStudent++;
                                             printf("Thêm sinh viên thành công\n");
                                         }
-                                        else if (strcmp(add, s[j].id) == 0 && strlen(s[i].classId) != 0)
+                                        else if (strcmp(add, s[j].id) == 0 && strlen(s[j].classId) != 0)
                                         {
                                             exist = 1;
                                             printf("Sinh viên hiện đã có lớp\n");
