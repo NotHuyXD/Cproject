@@ -16,7 +16,7 @@ typedef struct student
 } Student;
 typedef struct classroom
 {
-    char name[11], id[11];
+    char name[40], id[11];
     Student students[20];
     char teacherName[20];
     int totalStudent;

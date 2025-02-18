@@ -1439,7 +1439,7 @@ void addClass() // Thêm lớp học
             }
             if (c[i].id[0] != 'I' || c[i].id[1] != 'N' || c[i].id[2] != 'T') // Kiểm tra 3 ký tự đầu có phải INT không
             {
-                printf("ID không hợp lệ");
+                printf("ID không hợp lệ\n");
                 check = 1;
             }
             for (int j = 0; j < i; j++) // Kiểm tra nếu ID bị trùng lặp
@@ -1452,15 +1452,18 @@ void addClass() // Thêm lớp học
                 }
             }
         } while (strlen(c[i].id) > 10 || check == 1 || loop == 1);
+        getchar();
         do
         {
             check = 0, loop = 0;
             printf("Nhập tên lớp: ");
-            scanf("%20s", c[i].name);
-            if (strlen(c[i].name) > 20)
+            fgets(c[i].name, 40, stdin);
+            c[i].name[strlen(c[i].name) - 1] = '\0';
+            fflush(stdin);
+            if (strlen(c[i].name) > 40)
             {
                 check = 1;
-                printf("Tên lớp không được quá 20 ký tự\n");
+                printf("Tên lớp không được quá 40 ký tự\n");
             }
             for (int j = 0; j < i; j++) // Kiểm tra nếu tên lớp trùng lặp
             {
@@ -1470,7 +1473,7 @@ void addClass() // Thêm lớp học
                     check = 1;
                 }
             }
-        } while (strlen(c[i].name) > 20 || check == 1 || loop == 1);
+        } while (strlen(c[i].name) > 40 || check == 1 || loop == 1);
     }
     totalClass += n;
     fwrite(&totalClass, sizeof(int), 1, f);
@@ -1495,13 +1498,13 @@ void listClass() // Hiển thị tất cả lớp học
         else
         {
             printf("%43cDANH SACH LOP\n");
-            printf("================================================================\n");
-            printf("||%-10s|%-23s|%-6s|%-24s||\n", "ID", "Tên lớp", "Sĩ số", "Giáo viên");
+            printf("====================================================================================\n");
+            printf("||%-10s|%-43s|%-6s|%-24s||\n", "ID", "Tên lớp", "Sĩ số", "Giáo viên");
             for (int i = 0; i < totalClass; i++)
             {
-                printf("||%-10s|%-20s|%-5d|%-22s||\n", c[i].id, c[i].name, c[i].totalStudent, c[i].teacherName);
+                printf("||%-10s|%-40s|%-5d|%-22s||\n", c[i].id, c[i].name, c[i].totalStudent, c[i].teacherName);
             }
-            printf("================================================================\n");
+            printf("====================================================================================\n");
             fclose(f);
         }
     }
@@ -1532,8 +1535,8 @@ void showClass() // Hiển thị lớp học
                 {
                     n = 1;
                     printf("===================================================================================================\n");
-                    printf("||%-10s|%-23s|%-6s|%-24s||\n", "ID", "Tên lớp", "Sĩ số", "Giáo viên");
-                    printf("||%-10s|%-20s|%-5d|%-22s||\n", c[i].id, c[i].name, c[i].totalStudent, c[i].teacherName);
+                    printf("||%-10s|%-43s|%-6s|%-24s||\n", "ID", "Tên lớp", "Sĩ số", "Giáo viên");
+                    printf("||%-10s|%-40s|%-5d|%-22s||\n", c[i].id, c[i].name, c[i].totalStudent, c[i].teacherName);
                     printf("===================================================================================================\n");
                     printf("Bạn có muốn thêm sinh viên cho lớp không?\n");
                     printf("1. Có%5c2. Không\n");
@@ -1704,16 +1707,16 @@ void editClass() // Chỉnh sửa thông tin lớp học
                         check = 0;
                         getchar();
                         printf("Nhập tên lớp: ");
-                        fgets(c[i].name, 20, stdin);
+                        fgets(c[i].name, 40, stdin);
                         c[i].name[strlen(c[i].name) - 1] = '\0';
                         fflush(stdin);
                         if (strlen(c[i].name) == 0)
                         {
                             printf("Tên không được để trống\n");
                         }
-                        if (strlen(c[i].name) > 20)
+                        if (strlen(c[i].name) > 40)
                         {
-                            printf("Tên không được quá 20 ký tự\n");
+                            printf("Tên không được quá 40 ký tự\n");
                         }
                         for (int j = 0; j < strlen(c[i].name); j++)
                         {
@@ -1724,7 +1727,7 @@ void editClass() // Chỉnh sửa thông tin lớp học
                                 break;
                             }
                         }
-                    } while (strlen(c[i].name) > 20 || strlen(s[i].name) == 0 || check == 1);
+                    } while (strlen(c[i].name) > 40 || strlen(s[i].name) == 0 || check == 1);
                     fwrite(&totalClass, sizeof(int), 1, f);
                     fwrite(c, sizeof(Classroom), totalClass, f);
                     fclose(f);
@@ -1754,7 +1757,7 @@ void loginAccount() // Đăng nhập tài khoản
     do
     {
         check = 0;
-        printf("%25cĐĂNG NHẬP TÀI KHOẢN QUẢN LÝ\n");
+        printf("=========================ĐĂNG NHẬP TÀI KHOẢN QUẢN LÝ=========================\n");
         printf("Username:");
         scanf("%s", &username);
         printf("Password:");
