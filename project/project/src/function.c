@@ -231,11 +231,6 @@ void addStudent() // Thêm sinh viên
                 printf("Tuổi không được chứa chữ cái\n");
                 check = 1;
             }
-            if (s[i].age == "\0")
-            {
-                printf("Tuổi không được để trống\n");
-                check = 1;
-            }
         } while (s[i].age < 0 && s[i].age > 34 || check == 1);
         getchar();
         do
@@ -591,11 +586,6 @@ void editStudent() // Sửa thông tin cho sinh viên
                             printf("Tuổi không được chứa chữ cái\n");
                             check = 1;
                         }
-                        if (s[i].age == "\0")
-                        {
-                            printf("Tuổi không được để trống\n");
-                            check = 1;
-                        }
                     } while (s[i].age < 0 && s[i].age > 34 || check == 1);
                     getchar();
                     do
@@ -921,11 +911,6 @@ void addTeacher() // Thêm giáo viên
                     printf("Tuổi không được chứa chữ cái\n");
                     check = 1;
                 }
-                if (t[i].age == "\0")
-                {
-                    printf("Tuổi không được để trống\n");
-                    check = 1;
-                }
             } while (t[i].age < 19 && t[i].age > 48 || check == 1);
             getchar();
             do
@@ -1222,11 +1207,6 @@ void editTeacher() // Sửa thông tin giáo viên
                         if (isalpha(t[i].age))
                         {
                             printf("Tuổi không được chứa chữ cái\n");
-                            check = 1;
-                        }
-                        if (t[i].age == "\0")
-                        {
-                            printf("Tuổi không được để trống\n");
                             check = 1;
                         }
                     } while (t[i].age < 19 && t[i].age > 48 || check == 1);
