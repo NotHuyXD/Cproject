@@ -127,8 +127,6 @@ int main(int argc, char const *argv[])
                 }
             } while (menuchoice != 6);
             break;
-        case 4:
-            break;
         default:
             printf("Lựa chọn không hợp lệ\n");
         }
